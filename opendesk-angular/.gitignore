@@ -1,0 +1,77 @@
+### Frontend ###
+
+.idea/
+alf_data_dev/
+alfresco.iml
+out/
+target/
+*.iml
+.project
+.settings/
+.classpath
+alfresco.log
+
+### Backend ###
+
+junitresults.xml
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+tmp
+.DS_Store
+app/jspm_packages
+.tern-project
+nbproject/*
+dist
+app/src/.sass-cache
+app/src/**/.sass-cache
+app/src/modules/*
+!app/src/modules/README.md
+web.config
+/bin/
+._*
+app/src/app.iml
+*.log
+.nsprc
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
+.DS_Store
+Thumbs.db

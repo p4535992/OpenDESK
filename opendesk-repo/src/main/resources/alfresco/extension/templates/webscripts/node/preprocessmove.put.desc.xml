@@ -1,0 +1,7 @@
+<webscript>
+    <shortname>Preprocess Move</shortname>
+    <description>Preprocess Move</description>
+    <url>/node/preprocess</url>
+    <format default="json">argument</format>
+    <authentication>user</authentication>
+</webscript>
