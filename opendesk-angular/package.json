@@ -48,8 +48,7 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "node build/build.js",
-    "build-maven": "ng build --base-href ./opendesk/" 
+    "build": "node build/build.js"
   },
   "dependencies": {
     "@babel/core": "^7.1.0",
