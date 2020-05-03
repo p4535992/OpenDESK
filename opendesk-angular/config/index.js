@@ -4,19 +4,22 @@
 
 const path = require('path')
 
+const modOpenDeskHost = 'http://localhost:8444';//MOD 4535992
+const modAlfrescoHost = 'http://192.168.1.165:8080';//MOD 4535992
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'assets',
     assetsPublicPath: '/',
     proxyTable: {
       '/alfresco': {
-        target: process.env.BASE_URL || 'http://localhost:8080',
+        //target: process.env.BASE_URL || 'http://localhost:8080',//MOD 4535992
+    	target: process.env.BASE_URL || modAlfrescoHost,
         changeOrigin: true
       },
       '/opendesk/assets': {
-        target: 'http://localhost:8000/app/assets',
+        //target: 'http://localhost:8000/app/assets', //MOD 4535992
+    	target: modOpenDeskHost + '/app/assets',
         changeOrigin: true,
         pathRewrite: {
           '^/opendesk/assets': ''
@@ -25,8 +28,10 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8000, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    //host: 'localhost', //MOD 4535992 // can be overwritten by process.env.HOST
+    host: 'localhost',
+    //port: 8000, //MOD 4535992 // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8444,
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
