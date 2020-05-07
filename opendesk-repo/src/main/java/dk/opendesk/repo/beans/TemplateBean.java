@@ -104,4 +104,53 @@ public class TemplateBean {
 
         return children;
     }
+    
+    
+    // MOD 4535992
+    
+    /**
+     * Gets templates from path.
+     * (method = getDocumentTemplates)
+     * (method = getFolderTemplates)
+     * @param path of the templates.
+     * @return a JSONArray containing nodeRef, name and mimeType of each template.
+     */
+    public JSONArray getTemplates(String path) throws SearcherException, JSONException, FileNotFoundException {
+
+        NodeRef templateFolder = getTemplateFolderRef(path);
+
+        List<ChildAssociationRef> childAssociationRefs = nodeService.getChildAssocs(templateFolder);
+
+        JSONArray children = new JSONArray();
+        for (ChildAssociationRef child : childAssociationRefs) {
+            NodeRef templateRef = child.getChildRef();
+
+            JSONObject json = nodeBean.getNodeType(templateRef);
+
+            json.put("nodeRef", templateRef.getId());
+
+            String name = nodeBean.getName(templateRef);
+            json.put("name", name);
+
+            boolean isFolder = "cmis:folder".equals(json.getString("contentType"));
+            json.put("isFolder", isFolder);
+
+            children.add(json);
+        }
+
+        return children;
+    }
+    
+    /**
+     * Gets the nodeRef for a template folder.
+     * @param templateFolderPath path of the template folder.
+     * @return nodeRef of the template folder.
+     */
+    private NodeRef getTemplateFolderRef(String templateFolderPath) throws SearcherException, FileNotFoundException {
+        //NodeRef companyHome = repository.getCompanyHome();
+        //return fileFolderService.resolveNamePath(companyHome, templateFolderPath).getNodeRef();
+    	return this.nodeBean.getNodeRefByLuceneQuery(templateFolderPath);
+    }
+    
+    //END MOD 4535992
 }

@@ -25,6 +25,12 @@ import java.util.Map;
 
 public class SettingsBean {
 
+	//MOD 4535992
+	private NodeBean nodeBean;
+    public void setNodeBean(NodeBean nodeBean) {
+		this.nodeBean = nodeBean;
+	}	
+	//END MOD 4535992
 
     private NodeService nodeService;
     private Repository repository;
@@ -56,8 +62,11 @@ public class SettingsBean {
     }
 
     public NodeRef getSettingsFolder() throws FileNotFoundException {
-        NodeRef companyHome = repository.getCompanyHome();
-        return fileFolderService.resolveNamePath(companyHome, OpenDeskModel.PATH_OD_SETTINGS).getNodeRef();
+    	//MOD 4535992
+        //NodeRef companyHome = repository.getCompanyHome();
+        //return fileFolderService.resolveNamePath(companyHome, OpenDeskModel.PATH_OD_SETTINGS).getNodeRef();
+    	return nodeBean.getNodeRefByLuceneQuery(OpenDeskModel.PATH_OD_SETTINGS);
+    	//END MOD 4535992
     }
 
     private void loadPublicSettings() throws FileNotFoundException, JSONException {

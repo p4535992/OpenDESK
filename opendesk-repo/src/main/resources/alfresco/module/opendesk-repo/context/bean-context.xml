@@ -61,6 +61,9 @@
         <property name="siteService" ref="SiteService"/>
         <property name="sysAdminParams" ref="sysAdminParams"/>
         <property name="versionService" ref="VersionService"/>
+        <!-- MOD 4535992 -->
+        <property name="utils" ref="templateUtils"/>
+        <!-- END MOD 453592 -->
     </bean>
 
     <bean id="notificationBean" class="dk.opendesk.repo.beans.NotificationBean">
@@ -115,6 +118,9 @@
         <property name="fileFolderService" ref="FileFolderService"/>
         <property name="nodeService" ref="NodeService"/>
         <property name="repository" ref="repositoryHelper"/>
+        <!-- MOD 4535992 -->
+        <property name="nodeBean" ref="nodeBean"/>
+        <!-- END MOD 4535992 -->
     </bean>
 
     <bean id="siteBean" class="dk.opendesk.repo.beans.SiteBean">
@@ -136,5 +142,10 @@
         <property name="fileFolderService" ref="fileFolderService"/>
         <property name="repository" ref="repositoryHelper"/>
     </bean>
-
+    
+    <!-- MOD 4535992 -->
+ 	<bean id="templateUtils" class="dk.opendesk.repo.utils.Utils">
+        <property name="serviceRegistry" ref="ServiceRegistry"/>
+    </bean>
+	<!-- END MOD 453592 -->
 </beans>

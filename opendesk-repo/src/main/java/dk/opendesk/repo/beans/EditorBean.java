@@ -18,10 +18,11 @@ import org.alfresco.service.cmr.repository.NodeRef;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.InitializingBean;
 
 import java.util.*;
 
-public class EditorBean {
+public class EditorBean implements InitializingBean{ //MOD 4535992
 
     private ContentBean contentBean;
     private NodeBean nodeBean;
@@ -44,7 +45,9 @@ public class EditorBean {
     }
 
     private JSONObject getDefinition(String editorKey) throws JSONException {
-        List<String> path = new ArrayList<>(OpenDeskModel.PATH_OD_EDITORS);
+        //MOD 4535992
+    	/*
+    	List<String> path = new ArrayList<>(OpenDeskModel.PATH_OD_EDITORS);
         path.add(editorKey + ".json");
         try {
             NodeRef nodeRef = nodeBean.getNodeByPath(path);
@@ -52,6 +55,15 @@ public class EditorBean {
         } catch (FileNotFoundException e) {
             return null;
         }
+        */
+        try {
+            //NodeRef nodeRef = nodeBean.getNodeRefByLuceneQuery(OpenDeskModel.PATH_OD_EDITORS_FILES + "+@cm\\:name:\""+editorKey+".json\"");
+        	NodeRef nodeRef = nodeBean.getNodeRefByLuceneQuery(OpenDeskModel.PATH_OD_EDITORS_FILES, editorKey+".json");
+            return contentBean.getContent(nodeRef);
+        } catch (Exception e) {
+            return null;
+        }
+        //END MOD 4535992
     }
 
     public JSONObject getEditInfo(String mimeType, boolean canEdit, boolean isLocked, String lockType)
@@ -126,4 +138,11 @@ public class EditorBean {
             editorObjects.put(editorKey, module);
         }
     }
+    
+    //MOD 4535992
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		loadEditors();
+	}    
+    //END MOD 4535992
 }

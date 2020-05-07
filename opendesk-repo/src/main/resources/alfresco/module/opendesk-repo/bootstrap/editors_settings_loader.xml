@@ -19,11 +19,11 @@
                     <cm:author>admin</cm:author>
                     <cm:name>libreOffice.json</cm:name>
                     <cm:title>libreOffice.json</cm:title>
-                    <cm:content>contentUrl=classpath:alfresco/module/repo/bootstrap/files/editors/libreOffice.json|mimetype=application/json|size=3660|encoding=UTF-8|locale=da_DK_</cm:content>
+                    <cm:content>contentUrl=classpath:alfresco/module/${project.artifactId}/bootstrap/files/editors/libreOffice.json|mimetype=application/json|size=3660|encoding=UTF-8|locale=da_DK_</cm:content>
                 </view:properties>
                 <view:associations></view:associations>
             </cm:content>
-            <cm:content view:childName="cm:onlyOffice.json">
+            <cm:content view:childName="cm:msOffice.json"><!-- MOD 4535992 -->
                 <view:aspects>
                     <cm:author />
                 </view:aspects>
@@ -32,7 +32,7 @@
                     <cm:author>admin</cm:author>
                     <cm:name>msOffice.json</cm:name>
                     <cm:title>msOffice.json</cm:title>
-                    <cm:content>contentUrl=classpath:alfresco/module/repo/bootstrap/files/editors/msOffice.json|mimetype=application/json|size=1569|encoding=UTF-8|locale=da_DK_</cm:content>
+                    <cm:content>contentUrl=classpath:alfresco/module/${project.artifactId}/bootstrap/files/editors/msOffice.json|mimetype=application/json|size=1569|encoding=UTF-8|locale=da_DK_</cm:content>
                 </view:properties>
                 <view:associations></view:associations>
             </cm:content>
@@ -45,7 +45,7 @@
                     <cm:author>admin</cm:author>
                     <cm:name>onlyOffice.json</cm:name>
                     <cm:title>onlyOffice.json</cm:title>
-                    <cm:content>contentUrl=classpath:alfresco/module/repo/bootstrap/files/editors/onlyOffice.json|mimetype=application/json|size=729|encoding=UTF-8|locale=da_DK_</cm:content>
+                    <cm:content>contentUrl=classpath:alfresco/module/${project.artifactId}/bootstrap/files/editors/onlyOffice.json|mimetype=application/json|size=729|encoding=UTF-8|locale=da_DK_</cm:content>
                 </view:properties>
                 <view:associations></view:associations>
             </cm:content>

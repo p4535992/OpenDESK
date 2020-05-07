@@ -9,6 +9,8 @@
 package dk.opendesk.repo.beans;
 
 import dk.opendesk.repo.model.OpenDeskModel;
+import dk.opendesk.repo.utils.Utils;
+
 import org.alfresco.model.ContentModel;
 import org.alfresco.repo.admin.SysAdminParams;
 import org.alfresco.repo.model.Repository;
@@ -59,6 +61,13 @@ public class NodeBean {
     private SiteService siteService;
     private SysAdminParams sysAdminParams;
     private VersionService versionService;
+    
+    //MOD 4535992
+    private Utils utils;
+    public void setUtils(Utils utils) {
+		this.utils = utils;
+	}
+    //END MOD 4535992
 
     public void setEditorBean(EditorBean editorBean) {
         this.editorBean = editorBean;
@@ -655,6 +664,8 @@ public class NodeBean {
     }
 
     private NodeRef getPropertyUIDefinitionsNode(QName typeName) throws FileNotFoundException {
+    	//MOD 4535992
+    	/*
         List<String> path = new ArrayList<>(OpenDeskModel.PATH_OD_PROPERTY_UI_DEFINITIONS);
         QName typeNamePrefixedQName = typeName.getPrefixedQName(namespaceService);
         String prefixString = typeNamePrefixedQName.toPrefixString();
@@ -662,6 +673,14 @@ public class NodeBean {
         path.add(prefixLocal[0]);
         path.add(prefixLocal[1] + ".json");
         return getNodeByPath(path);
+        */
+    	QName typeNamePrefixedQName = typeName.getPrefixedQName(namespaceService);
+        String prefixString = typeNamePrefixedQName.toPrefixString();
+        String prefixLocal[] = QName.splitPrefixedQName(prefixString);
+        String folderSettings = prefixLocal[0];
+        String nameSettings = prefixLocal[1] + ".json";
+    	return getNodeRefByLuceneQuery(OpenDeskModel.PATH_OD_PROPERTY_UI_DEFINITIONS + "+@cm\\:name:\""+nameSettings+"\"");
+        //END MOD 4535992
     }
 
     public JSONObject getPropertyUIDefinitions(NodeRef nodeRef) throws FileNotFoundException, JSONException {
@@ -909,4 +928,20 @@ public class NodeBean {
         }
         return map;
     }
+    
+    // MOD 4535992
+    public NodeRef getNodeRefByLuceneQuery(String luceneQuery) {
+    	return utils.getNodeRefByLuceneQuery(luceneQuery);
+    }
+    
+    public NodeRef getNodeRefByLuceneQuery(String luceneQuery, String fileName) {
+    	return utils.getNodeRefByLuceneQuery(luceneQuery,fileName);
+    }
+    
+    public NodeRef getNodeByPath(String luceneQuery) throws FileNotFoundException {
+        //NodeRef companyHome = getCompanyHome();
+        //return fileFolderService.resolveNamePath(companyHome, path).getNodeRef();
+    	return getNodeRefByLuceneQuery(luceneQuery);
+    }
+    //END MOD 4535992
 }

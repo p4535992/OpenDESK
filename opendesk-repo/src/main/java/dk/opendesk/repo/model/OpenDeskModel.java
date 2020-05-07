@@ -21,21 +21,34 @@ public interface OpenDeskModel {
     String SITE = "Site";
 
     // SPECIAL SITES
-    List<String> PATH_COMPANY_HOME = new ArrayList<>();
-    List<String> PATH_NODE_TEMPLATES = new ArrayList<>(Arrays.asList("Data Dictionary", "Node Templates"));
-    List<String> PATH_SPACE_TEMPLATES = new ArrayList<>(Arrays.asList("Data Dictionary", "Space Templates"));
-    List<String> PATH_TEXT_TEMPLATES = new ArrayList<>(Arrays.asList("Data Dictionary", "Web Scripts Extensions",
-            "OpenDesk", "Templates"));
-    List<String> PATH_OD_SETTINGS = new ArrayList<>(Arrays.asList("Data Dictionary", "OpenDesk Extension",
-            "settings.xml"));
-    List<String> PATH_OD_EDITORS = new ArrayList<>(Arrays.asList("Data Dictionary", "OpenDesk Extension",
-            "Editors"));
-    List<String> PATH_OD_PROPERTY_UI_DEFINITIONS = new ArrayList<>(Arrays.asList("Data Dictionary", "OpenDesk Extension",
-            "Property UI Definitions"));
-    List<String> PATH_OD_PROPERTY_WIDGETS = new ArrayList<>(Arrays.asList("Data Dictionary", "OpenDesk Extension",
-            "Property UI Definitions", "widgets.json"));
+    //MOD 4535992
+//    List<String> PATH_COMPANY_HOME = new ArrayList<>();
+//    List<String> PATH_NODE_TEMPLATES = new ArrayList<>(Arrays.asList("Data Dictionary", "Node Templates"));
+//    List<String> PATH_SPACE_TEMPLATES = new ArrayList<>(Arrays.asList("Data Dictionary", "Space Templates"));
+//    List<String> PATH_TEXT_TEMPLATES = new ArrayList<>(Arrays.asList("Data Dictionary", "Web Scripts Extensions",
+//            "OpenDesk", "Templates"));
+//    List<String> PATH_OD_SETTINGS = new ArrayList<>(Arrays.asList("Data Dictionary", "OpenDesk Extension",
+//            "settings.xml"));
+//    List<String> PATH_OD_EDITORS = new ArrayList<>(Arrays.asList("Data Dictionary", "OpenDesk Extension",
+//            "Editors"));
+//    List<String> PATH_OD_PROPERTY_UI_DEFINITIONS = new ArrayList<>(Arrays.asList("Data Dictionary", "OpenDesk Extension",
+//            "Property UI Definitions"));
+//    List<String> PATH_OD_PROPERTY_WIDGETS = new ArrayList<>(Arrays.asList("Data Dictionary", "OpenDesk Extension",
+//            "Property UI Definitions", "widgets.json"));
 
-
+	public static final String PATH_COMPANY_HOME = "+PATH:\"/app:company_home\"";
+	public static final String PATH_NODE_TEMPLATES =  "+PATH:\"/app:company_home/app:dictionary/app:node_templates\"";
+	public static final String PATH_SPACE_TEMPLATES =  "+PATH:\"/app:company_home/app:dictionary/app:space_templates\"";
+	public static final String PATH_TEXT_TEMPLATES =  "+PATH:\"/app:company_home/app:dictionary/cm:extensionwebscripts/cm:OpenDesk/cm:Templates\"";
+	          
+	//public static final String PATH_OD_SETTINGS =  "+PATH:\"/app:company_home/app:dictionary/cm:opendesk_extension/cm:settings.xml\"";
+	public static final String PATH_OD_SETTINGS =  "+PATH:\"/app:company_home/app:dictionary/cm:opendesk_extension//.\" +@cm\\:name:\"settings.xml\"";
+	public static final String PATH_OD_EDITORS =  "+PATH:\"/app:company_home/app:dictionary/cm:opendesk_extension/cm:editors\"";
+	public static final String PATH_OD_EDITORS_FILES =  "+PATH:\"/app:company_home/app:dictionary/cm:opendesk_extension/cm:editors//.\"";
+	public static final String PATH_OD_PROPERTY_UI_DEFINITIONS =  "+PATH:\"/app:company_home/app:dictionary/cm:opendesk_extension/cm:property_ui_definitions\"";
+	public static final String PATH_OD_PROPERTY_WIDGETS =  "+PATH:\"/app:company_home/app:dictionary/cm:opendesk_extension/cm:property_ui_definitions//.\" +@cm\\:name:\"widgets.json\"";
+	
+    //END MOD A4535992
     // Containers
     String DISCUSSIONS = "discussions";
     String DOC_LIBRARY = "documentLibrary";
