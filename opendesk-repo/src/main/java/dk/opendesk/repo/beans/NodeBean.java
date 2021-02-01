@@ -63,12 +63,12 @@ public class NodeBean {
     private VersionService versionService;
     
     //MOD 4535992
+    private static final transient org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(NodeBean.class);
     private Utils utils;
     public void setUtils(Utils utils) {
 		this.utils = utils;
 	}
     //END MOD 4535992
-
     public void setEditorBean(EditorBean editorBean) {
         this.editorBean = editorBean;
     }
@@ -627,28 +627,34 @@ public class NodeBean {
     public JSONObject getPropertyDefinition(QName propertyName) throws JSONException {
         JSONObject result = new JSONObject();
         PropertyDefinition propertyDef = dictionaryService.getProperty(propertyName);
-        String title = propertyDef.getTitle();
-        result.put("title", title);
-        String description = propertyDef.getDescription();
-        result.put("description", description);
-        DataTypeDefinition dataType = propertyDef.getDataType();
-        if(dataType != null) {
-            QName dataTypeQName = dataType.getName();
-            QName dataTypePrefixedQName = dataTypeQName.getPrefixedQName(namespaceService);
-            String prefixString = dataTypePrefixedQName.toPrefixString();
-            result.put("dataTypeName", prefixString);
+        if(propertyDef!=null) {// MOD 4535992
+	        String title = propertyDef.getTitle();
+	        result.put("title", title);
+	        String description = propertyDef.getDescription();
+	        result.put("description", description);
+	        DataTypeDefinition dataType = propertyDef.getDataType();
+	        if(dataType != null) {
+	            QName dataTypeQName = dataType.getName();
+	            QName dataTypePrefixedQName = dataTypeQName.getPrefixedQName(namespaceService);
+	            String prefixString = dataTypePrefixedQName.toPrefixString();
+	            result.put("dataTypeName", prefixString);
+	        }
+	        String defaultValue = propertyDef.getDefaultValue();
+	        result.put("defaultValue", defaultValue);
+	        boolean mandatory = propertyDef.isMandatory();
+	        result.put("mandatory", mandatory);
+	        boolean multiValued = propertyDef.isMultiValued();
+	        result.put("multiValued", multiValued);
+	        List<ConstraintDefinition> constraintDefinitions = propertyDef.getConstraints();
+	        JSONArray constraints = getConstraints(constraintDefinitions);
+	        result.put("constraints", constraints);
+	
+	        return result;
+	    // MOD 4535992    
+        }else {
+        	logger.error("Can't find properydefinition for '"+propertyName+"'");
+        	return null;
         }
-        String defaultValue = propertyDef.getDefaultValue();
-        result.put("defaultValue", defaultValue);
-        boolean mandatory = propertyDef.isMandatory();
-        result.put("mandatory", mandatory);
-        boolean multiValued = propertyDef.isMultiValued();
-        result.put("multiValued", multiValued);
-        List<ConstraintDefinition> constraintDefinitions = propertyDef.getConstraints();
-        JSONArray constraints = getConstraints(constraintDefinitions);
-        result.put("constraints", constraints);
-
-        return result;
     }
 
     public JSONObject getPropertyDefinitions(NodeRef nodeRef) throws JSONException {
@@ -656,9 +662,15 @@ public class NodeBean {
         Map<QName, Serializable> properties = nodeService.getProperties(nodeRef);
         for(QName propertyName : properties.keySet()) {
             JSONObject propertyDefinition = getPropertyDefinition(propertyName);
-            QName propertyNamePrefixedQName = propertyName.getPrefixedQName(namespaceService);
-            String prefixString = propertyNamePrefixedQName.toPrefixString();
-            result.put(prefixString, propertyDefinition);
+            if(propertyDefinition!=null) {// MOD 4535992
+	            QName propertyNamePrefixedQName = propertyName.getPrefixedQName(namespaceService);
+	            String prefixString = propertyNamePrefixedQName.toPrefixString();
+	            result.put(prefixString, propertyDefinition);
+	    	// MOD 4535992    
+            }else {
+            	logger.error("Can't find properydefinition for '"+propertyName+"'");
+            	return null;
+            }
         }
         return result;
     }
